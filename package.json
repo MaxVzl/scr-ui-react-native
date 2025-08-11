@@ -1,0 +1,30 @@
+{
+  "name": "@MaxVzl/scr-ui-react-native",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup src/index.ts --format esm,cjs --dts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.8.1",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-native": ">=0.70"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-native": "^0.80.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.9",
+    "@types/react-native": "^0.73.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
