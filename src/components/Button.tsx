@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ScrUiContext } from '../contexts/ScrUiContext';
+import { Color } from '../types/Color';
 
 type Props = {
   title: string;
@@ -7,21 +9,23 @@ type Props = {
 };
 
 export const Button = ({ title, onPress }: Props) => {
+  const color = useContext(ScrUiContext);
+  
   return (
-    <TouchableOpacity style={styles.bouton} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+    <TouchableOpacity style={styles(color!).bouton} onPress={onPress} activeOpacity={0.8}>
+      <Text style={styles(color!).text}>{title}</Text>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = (color: Color) => StyleSheet.create({
   bouton: {
-    backgroundColor: '#6200ee',
+    backgroundColor: color.tint,
     padding: 10,
     borderRadius: 8,
   },
   text: {
-    color: '#fff',
+    color: color.background,
     textAlign: 'center',
   },
 });
