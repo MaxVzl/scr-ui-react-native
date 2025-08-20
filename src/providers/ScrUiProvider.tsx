@@ -1,15 +1,27 @@
 import * as React from 'react';
 
-import { ScrUiContext } from '../contexts/ScrUiContext';
-import { Color } from '../types/Color';
+import { ScrUiContext, ScrUiContextType } from '../contexts/ScrUiContext';
+import { BottomSheetProvider } from './BottomSheetProvider';
+import {GestureHandlerRootView} from "react-native-gesture-handler";
+import {StyleSheet} from "react-native";
 
 type Props = {
-  value?: Color;
+  value?: ScrUiContextType;
   children: React.ReactNode;
 };
 
 export function ScrUiProvider({ value, children }: Props) {
   return (
-    <ScrUiContext.Provider value={value}>{children}</ScrUiContext.Provider>
+    <ScrUiContext.Provider value={value!}>
+      <GestureHandlerRootView style={styles.container}>
+        <BottomSheetProvider>{children}</BottomSheetProvider>
+      </GestureHandlerRootView>
+    </ScrUiContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

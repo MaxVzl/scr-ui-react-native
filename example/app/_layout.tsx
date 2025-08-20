@@ -21,7 +21,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <ScrUiProvider value={colorScheme === 'dark' ? Colors.dark : Colors.light}>
+      <ScrUiProvider value={{ colors: colorScheme === 'dark' ? Colors.dark : Colors.light }}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />

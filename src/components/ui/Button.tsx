@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { ScrUiContext } from '../contexts/ScrUiContext';
-import { Color } from '../types/Color';
+import { ScrUiContext } from '../../contexts/ScrUiContext';
+import { Color } from '../../types/Color';
 
 type Props = {
   title: string;
@@ -9,11 +9,11 @@ type Props = {
 };
 
 export const Button = ({ title, onPress }: Props) => {
-  const color = useContext(ScrUiContext);
+  const { colors } = useContext(ScrUiContext);
   
   return (
-    <TouchableOpacity style={styles(color!).bouton} onPress={onPress} activeOpacity={0.8}>
-      <Text style={styles(color!).text}>{title}</Text>
+    <TouchableOpacity style={styles(colors!).bouton} onPress={onPress} activeOpacity={0.8}>
+      <Text style={styles(colors!).text}>{title}</Text>
     </TouchableOpacity>
   );
 };
