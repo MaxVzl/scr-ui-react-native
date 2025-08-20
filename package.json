@@ -1,6 +1,6 @@
 {
   "name": "@mv_scr/scr-ui-react-native",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -18,7 +18,12 @@
     "@gorhom/bottom-sheet": "^5.2.0",
     "react": ">=18",
     "react-native": ">=0.70",
-    "react-native-gesture-handler": ">=2.28.0"
+    "react-native-gesture-handler": ">=2.28.0",
+    "date-fns": "^4.1.0",
+    "@react-native-picker/picker": "^2.11.0",
+    "react-native-calendars": "^1.1312.0",
+    "react-native-svg": "^15.12.1",
+    "lucide-react-native": "^0.540.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.9",

@@ -5,9 +5,14 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Button, dropdownMenu } from '@scr-ui/components';
+import { Button, DateTimePicker, dropdownMenu, IconButton } from '@scr-ui/components';
+import { useState } from 'react';
+import { useScrUi } from '@scr-ui/hooks';
 
 export default function HomeScreen() {
+  const [date, setDate] = useState(new Date());
+  const { colors } = useScrUi();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -53,18 +58,16 @@ export default function HomeScreen() {
         </ThemedText>
       </ThemedView>
       <Button title="Click me" onPress={() => console.log('Button pressed')} />
-      {/* <Button title="Click me" onPress={() => openDropdownMenu(
-        [
-          { label: 'Option 1', action: () => console.log('Option 1 sélectionnée') },
-          { label: 'Option 2', action: () => console.log('Option 2 sélectionnée') },
-          { label: 'Supprimer', action: () => console.log('Suppression...'), isError: true }
-        ]
-      )} /> */}
+      <Button title="Click me" onPress={() => console.log('Button pressed')} variant='secondary' />
+      <Button title="Click me" onPress={() => console.log('Button pressed')} variant='error' />
       <Button title="Click me" onPress={() => dropdownMenu.open([
           { label: 'Option 1', action: () => console.log('Option 1 sélectionnée') },
           { label: 'Option 2', action: () => console.log('Option 2 sélectionnée') },
           { label: 'Supprimer', action: () => console.log('Suppression...'), isError: true }
         ])} />
+      {/* @ts-ignore */}
+      <DateTimePicker value={date} onChange={(date) => setDate(date)} mode='date'/>
+      <IconButton icon='AArrowDown' onPress={() => console.log('IconButton pressed')} />
     </ParallaxScrollView>
   );
 }

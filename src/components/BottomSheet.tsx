@@ -1,5 +1,5 @@
 import { BackHandler, Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BottomSheetContext, getBottomSheetRef } from '../contexts/BottomSheetContext';
 import BS, {BottomSheetBackdrop} from "@gorhom/bottom-sheet";
 import { ScrUiContext } from '../contexts/ScrUiContext';

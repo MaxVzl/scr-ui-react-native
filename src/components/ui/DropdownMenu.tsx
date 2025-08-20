@@ -2,7 +2,7 @@ import { BottomSheetView, TouchableOpacity } from "@gorhom/bottom-sheet";
 import { StyleSheet, Text, View } from "react-native";
 import { bottomSheet } from "../BottomSheet";
 import { ScrUiContext } from "../../contexts/ScrUiContext";
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 type Action = {
   label: string;
@@ -27,7 +27,7 @@ const DropdownMenu = ({ actions }: { actions: Action[] }) => {
       {actions.map((action, index) => (
         <TouchableOpacity
           key={index}
-          style={[styles.container, { backgroundColor: action.isError ? "#FF00001A" : `${colors.tint}1A` }]}
+          style={[styles.container, { backgroundColor: action.isError ? `${colors.error}1A` : `${colors.primary}1A` }]}
           activeOpacity={0.8}
           onPress={() => {
             bottomSheet.close();
@@ -35,7 +35,7 @@ const DropdownMenu = ({ actions }: { actions: Action[] }) => {
           }}
         >
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10}}>
-            <Text style={{ color: action.isError ? "#FF0000" : colors.tint }}>{action.label}</Text>
+            <Text style={{ color: action.isError ? colors.error : colors.primary }}>{action.label}</Text>
           </View>
         </TouchableOpacity>
       ))}

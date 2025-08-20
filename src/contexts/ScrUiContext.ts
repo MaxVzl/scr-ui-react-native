@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Color } from '../types/Color';
 
-export type ScrUiContextType = {
+type ScrUiContextType = {
   colors: Color;
 };
 

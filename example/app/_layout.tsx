@@ -6,7 +6,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ScrUiProvider } from '../../src/providers/ScrUiProvider';
-import { Colors } from '@/constants/Colors';
+import { ScrUiColors } from '@/constants/ScrUiColors';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -21,7 +21,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <ScrUiProvider value={{ colors: colorScheme === 'dark' ? Colors.dark : Colors.light }}>
+      <ScrUiProvider value={{ colors: ScrUiColors }}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
