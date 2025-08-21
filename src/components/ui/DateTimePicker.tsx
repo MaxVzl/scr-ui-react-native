@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingHorizontal: 20,
-    height: 40,
-    borderRadius: 5,
+    padding: 10,
+    height: 48,
+    borderRadius: 8,
     borderWidth: 1,
   },
 });

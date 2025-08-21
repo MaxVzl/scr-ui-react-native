@@ -24,10 +24,10 @@ export const useBottomSheet = () => {
 export const bottomSheet = {
   open: ({
     children,
-    scrollable
+    scrollable = false
   }: {
     children: React.ReactNode;
-    scrollable: boolean;
+    scrollable?: boolean;
   }) => {
     // Utilise la référence globale pour éviter les dépendances circulaires
     const bottomSheetRef = getBottomSheetRef();

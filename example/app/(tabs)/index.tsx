@@ -5,13 +5,14 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Button, DateTimePicker, dropdownMenu, IconButton } from '@scr-ui/components';
+import { Button, DateTimePicker, dropdownMenu, IconButton, Input, SearchInput, Select } from '@scr-ui/components';
 import { useState } from 'react';
 import { useScrUi } from '@scr-ui/hooks';
 
 export default function HomeScreen() {
   const [date, setDate] = useState(new Date());
-  const { colors } = useScrUi();
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('');
 
   return (
     <ParallaxScrollView
@@ -22,7 +23,7 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-      <ThemedView style={styles.titleContainer}>
+      {/* <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
@@ -56,18 +57,30 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
-      </ThemedView>
-      <Button title="Click me" onPress={() => console.log('Button pressed')} />
-      <Button title="Click me" onPress={() => console.log('Button pressed')} variant='secondary' />
-      <Button title="Click me" onPress={() => console.log('Button pressed')} variant='error' />
+      </ThemedView> */}
+      {/* <Button title="Click me" onPress={() => {
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      }} loading={loading} />
+      <Button title="Click me" variant='secondary' size='small' icon='AArrowDown' loading={loading} />
+      <Button title="Click me" variant='error' size='large' icon='AArrowDown' spaced loading={loading} />
       <Button title="Click me" onPress={() => dropdownMenu.open([
           { label: 'Option 1', action: () => console.log('Option 1 sélectionnée') },
           { label: 'Option 2', action: () => console.log('Option 2 sélectionnée') },
           { label: 'Supprimer', action: () => console.log('Suppression...'), isError: true }
-        ])} />
+        ])} /> */}
       {/* @ts-ignore */}
-      <DateTimePicker value={date} onChange={(date) => setDate(date)} mode='date'/>
-      <IconButton icon='AArrowDown' onPress={() => console.log('IconButton pressed')} />
+      {/* <DateTimePicker value={date} onChange={(date) => setDate(date)} mode='date'/>
+      <IconButton icon='AArrowDown' loading={loading} />
+      <IconButton icon='AArrowDown' size='small' variant='secondary' loading={loading} />
+      <IconButton icon='AArrowDown' size='large' variant='error' loading={loading} />
+      <Input placeholder='Entrez votre nom' value={name} onChangeText={setName} />
+      <ThemedText>{name}</ThemedText> */}
+      {/* <SearchInput placeholder='Rechercher...' value={name} onChangeText={setName} />
+      <ThemedText>{name}</ThemedText> */}
+      <Select placeholder='Sélectionner une option' items={[{ label: 'Option 1', value: 'option1' }, { label: 'Option 2', value: 'option2' }]} />
     </ParallaxScrollView>
   );
 }

@@ -1,30 +1,66 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { ScrUiContext } from '../../contexts/ScrUiContext';
 import { Color } from '../../types/Color';
+import { icons } from 'lucide-react-native';
+import Icon from '../Icon';
 
 type ButtonVariant = 'primary' | 'secondary' |'error';
+type ButtonSize = 'large' | 'medium' | 'small';
 
-type ButtonProps = {
+type ButtonProps = TouchableOpacityProps & {
   title: string;
-  onPress?: () => void;
   variant?: ButtonVariant;
+  size?: ButtonSize;
+  icon?: keyof typeof icons;
+  spaced?: boolean;
+  loading?: boolean;
 };
 
-export const Button = ({ title, onPress, variant = 'primary' }: ButtonProps) => {
+export const Button = ({ 
+  title, 
+  variant = 'primary', 
+  size = 'medium', 
+  icon, 
+  spaced = false, 
+  loading = false, 
+  style,
+  disabled,
+  ...props 
+}: ButtonProps) => {
   const { colors } = useContext(ScrUiContext);
   
   return (
-    <TouchableOpacity style={[styles(colors).button, styles(colors)[variant]]} onPress={onPress} activeOpacity={0.8}>
-      <Text style={[styles(colors).text, styles(colors)[`${variant}Text`]]}>{title}</Text>
+    <TouchableOpacity 
+      style={[
+        styles(colors).button, 
+        styles(colors)[variant], 
+        styles(colors)[size], 
+        (spaced && !loading) && styles(colors).spaced,
+        (loading || disabled) && styles(colors).disabled,
+        style
+      ]} 
+      activeOpacity={0.8} 
+      disabled={loading || disabled}
+      {...props}
+    >
+      {loading ? <ActivityIndicator size="small" color={styles(colors)[`${variant}Text`].color} /> : (
+        <>
+          <Text style={[styles(colors).text, styles(colors)[`${variant}Text`]]}>{title}</Text>
+          {icon && <Icon name={icon} color={styles(colors)[`${variant}Text`].color} size={20} />}
+        </>
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = (color: Color) => StyleSheet.create({
   button: {
-    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 8,
+    gap: 10
   },
   text: {
     textAlign: 'center',
@@ -50,4 +86,25 @@ const styles = (color: Color) => StyleSheet.create({
   errorText: {
     color: color.error,
   },
+
+  large: {
+    padding: 20,
+    height: 60
+  },
+  medium: {
+    padding: 10,
+    height: 48
+  },
+  small: {
+    padding: 10,
+    height: 36
+  },
+
+  spaced: {
+    justifyContent: 'space-between'
+  },
+
+  disabled: {
+    opacity: 0.5
+  }
 });

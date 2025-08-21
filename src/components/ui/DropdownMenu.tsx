@@ -1,8 +1,8 @@
-import { BottomSheetView, TouchableOpacity } from "@gorhom/bottom-sheet";
-import { StyleSheet, Text, View } from "react-native";
+import { BottomSheetView } from "@gorhom/bottom-sheet";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { bottomSheet } from "../BottomSheet";
-import { ScrUiContext } from "../../contexts/ScrUiContext";
-import React, { useContext } from "react";
+import { Button } from "./Button";
 
 type Action = {
   label: string;
@@ -20,24 +20,13 @@ export const dropdownMenu = {
 }
 
 const DropdownMenu = ({ actions }: { actions: Action[] }) => {
-  const { colors } = useContext(ScrUiContext);
-
   return (
-    <BottomSheetView style={{ paddingHorizontal: 20, gap: 20, paddingBottom: 20 }}>
+    <BottomSheetView style={styles.container}>
       {actions.map((action, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[styles.container, { backgroundColor: action.isError ? `${colors.error}1A` : `${colors.primary}1A` }]}
-          activeOpacity={0.8}
-          onPress={() => {
-            bottomSheet.close();
-            action.action();
-          }}
-        >
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10}}>
-            <Text style={{ color: action.isError ? colors.error : colors.primary }}>{action.label}</Text>
-          </View>
-        </TouchableOpacity>
+        <Button key={index} title={action.label} variant={action.isError ? 'error' : 'secondary'} size="large" onPress={() => {
+          bottomSheet.close();
+          action.action();
+        }} />
       ))}
     </BottomSheetView>
   );
@@ -45,10 +34,8 @@ const DropdownMenu = ({ actions }: { actions: Action[] }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 5
+    paddingHorizontal: 20,
+    gap: 20,
+    paddingBottom: 20
   },
 });

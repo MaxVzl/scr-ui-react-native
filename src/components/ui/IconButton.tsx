@@ -1,34 +1,57 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { ScrUiContext } from '../../contexts/ScrUiContext';
 import { Color } from '../../types/Color';
 import Icon from '../Icon';
 import { icons } from 'lucide-react-native';
 
 type IconButtonVariant = 'primary' | 'secondary' |'error';
+type IconButtonSize = 'large' | 'medium' | 'small';
 
-type IconButtonProps = {
+type IconButtonProps = TouchableOpacityProps & {
   icon: keyof typeof icons;
   onPress?: () => void;
   variant?: IconButtonVariant;
+  size?: IconButtonSize;
+  loading?: boolean;
 };
 
-export const IconButton = ({ icon, onPress, variant = 'primary' }: IconButtonProps) => {
+export const IconButton = ({
+  icon,
+  onPress,
+  variant = 'primary',
+  size = 'medium',
+  loading = false,
+  style,
+  disabled,
+  ...props
+}: IconButtonProps) => {
   const { colors } = useContext(ScrUiContext);
   
   return (
-    <TouchableOpacity style={[styles(colors).button, styles(colors)[variant]]} onPress={onPress} activeOpacity={0.8}>
-      <Icon name={icon} color={styles(colors)[`${variant}Text`].color} size={20} />
+    <TouchableOpacity
+      style={[
+        styles(colors).button, 
+        styles(colors)[variant], 
+        styles(colors)[size], 
+        (loading || disabled) && styles(colors).disabled,
+        style
+      ]}
+      onPress={onPress}
+      activeOpacity={0.8}
+      disabled={loading || disabled}
+      {...props}
+    >
+      {loading ? <ActivityIndicator size="small" color={styles(colors)[`${variant}Text`].color} /> : (
+        <Icon name={icon} color={styles(colors)[`${variant}Text`].color} size={20} />
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = (color: Color) => StyleSheet.create({
   button: {
-    padding: 10,
     borderRadius: 8,
-    width: 40,
-    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -56,4 +79,24 @@ const styles = (color: Color) => StyleSheet.create({
   errorText: {
     color: color.error,
   },
+
+  large: {
+    padding: 20,
+    width: 60,
+    height: 60
+  },
+  medium: {
+    padding: 10,
+    width: 48,
+    height: 48
+  },
+  small: {
+    padding: 10,
+    width: 36,
+    height: 36
+  },
+
+  disabled: {
+    opacity: 0.5
+  }
 });
