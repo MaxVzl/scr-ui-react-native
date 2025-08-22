@@ -11,14 +11,16 @@ type Props = {
 export function BottomSheetProvider({ children }: Props) {
   const [visible, setVisible] = React.useState(false);
   const [scrollable, setScrollable] = React.useState(false);
+  const [fulled, setFulled] = React.useState(false);
   const bottomSheetRef = React.useRef<BS>(null);
   const [child, setChild] = React.useState<React.ReactNode>(null);
 
   // Fonction utilitaire pour ouvrir la BottomSheet
-  const open = (children: React.ReactNode, scrollable: boolean) => {
+  const open = (children: React.ReactNode, scrollable: boolean, fulled: boolean) => {
     setVisible(true);
     setChild(children);
     setScrollable(scrollable);
+    setFulled(fulled);
   };
 
   const contextValue = { 
@@ -29,6 +31,8 @@ export function BottomSheetProvider({ children }: Props) {
     setChild, 
     scrollable, 
     setScrollable,
+    fulled,
+    setFulled,
     open
   };
 

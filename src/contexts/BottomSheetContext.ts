@@ -9,7 +9,9 @@ export type BottomSheetContextType = {
   setChild: (child: React.ReactNode) => void;
   scrollable: boolean;
   setScrollable: (scrollable: boolean) => void;
-  open: (children: React.ReactNode, scrollable: boolean) => void;
+  fulled: boolean;
+  setFulled: (fulled: boolean) => void;
+  open: (children: React.ReactNode, scrollable: boolean, fulled: boolean) => void;
 };
 
 export const BottomSheetContext = React.createContext<BottomSheetContextType>({} as BottomSheetContextType);

@@ -1,5 +1,5 @@
 import { BackHandler, Dimensions, Text, TouchableOpacity, View } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import { BottomSheetContext, getBottomSheetRef } from '../contexts/BottomSheetContext';
 import BS, {BottomSheetBackdrop} from "@gorhom/bottom-sheet";
 import { ScrUiContext } from '../contexts/ScrUiContext';
@@ -9,8 +9,8 @@ export const useBottomSheet = () => {
   const context = useContext(BottomSheetContext);
   
   return {
-    open: (children: React.ReactNode, scrollable: boolean) => {
-      context.open(children, scrollable);
+    open: (children: React.ReactNode, scrollable: boolean, fulled: boolean) => {
+      context.open(children, scrollable, fulled);
     },
     close: () => {
       context.bottomSheetRef?.current?.close();
@@ -24,15 +24,17 @@ export const useBottomSheet = () => {
 export const bottomSheet = {
   open: ({
     children,
-    scrollable = false
+    scrollable = false,
+    fulled = false
   }: {
     children: React.ReactNode;
     scrollable?: boolean;
+    fulled?: boolean;
   }) => {
     // Utilise la référence globale pour éviter les dépendances circulaires
     const bottomSheetRef = getBottomSheetRef();
     if (bottomSheetRef) {
-      bottomSheetRef.open(children, scrollable);
+      bottomSheetRef.open(children, scrollable, fulled);
     } else {
       console.warn('BottomSheet not initialized yet');
     }
@@ -49,7 +51,7 @@ export const bottomSheet = {
 
 export const BottomSheet = () => {
   const { colors } = useContext(ScrUiContext);
-  const { visible, setVisible, bottomSheetRef, child, scrollable } = useContext(BottomSheetContext);
+  const { visible, setVisible, bottomSheetRef, child, scrollable, fulled } = useContext(BottomSheetContext);
 
   const screenHeight = Dimensions.get('window').height;
   const maxHeight = screenHeight * 0.9;
@@ -88,6 +90,9 @@ export const BottomSheet = () => {
       onClose={() => setVisible(false)}
       maxDynamicContentSize={maxHeight}
       enableContentPanningGesture={scrollable}
+      keyboardBehavior='extend'
+      enableDynamicSizing={!fulled}
+      snapPoints={fulled ? ['90%'] : undefined}
     >
       {child}
     </BS>

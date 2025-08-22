@@ -5,7 +5,7 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Button, DateTimePicker, dropdownMenu, IconButton, Input, SearchInput, Select } from '@scr-ui/components';
+import { Button, ButtonSkeleton, DateTimePicker, dropdownMenu, IconButton, Input, SearchInput, Select } from '@scr-ui/components';
 import { useState } from 'react';
 import { useScrUi } from '@scr-ui/hooks';
 
@@ -13,6 +13,17 @@ export default function HomeScreen() {
   const [date, setDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
+  const [select, setSelect] = useState<string | undefined>(undefined);
+
+  const fetchTodos = async () => {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const data = await response.json();
+    return data.map((todo: any) => ({
+      value: todo.id.toString(),
+      label: todo.title
+    }));
+  }
 
   return (
     <ParallaxScrollView
@@ -78,9 +89,29 @@ export default function HomeScreen() {
       <IconButton icon='AArrowDown' size='large' variant='error' loading={loading} />
       <Input placeholder='Entrez votre nom' value={name} onChangeText={setName} />
       <ThemedText>{name}</ThemedText> */}
-      {/* <SearchInput placeholder='Rechercher...' value={name} onChangeText={setName} />
+      {/* <SearchInput placeholder='Rechercher...' value={name} onChangeText={(value) => {
+        setName(value);
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      }} loading={loading} />
       <ThemedText>{name}</ThemedText> */}
-      <Select placeholder='Sélectionner une option' items={[{ label: 'Option 1', value: 'option1' }, { label: 'Option 2', value: 'option2' }]} />
+      <Select placeholder='Sélectionner une option' items={[
+        { label: 'Option 1', value: 'option1' },
+        { label: 'Option 2', value: 'option2' },
+        { label: 'Option 3', value: 'option3' },
+        { label: 'Option 4', value: 'option4' },
+        { label: 'Option 5', value: 'option5' },
+        { label: 'Option 6', value: 'option6' },
+        { label: 'Option 7', value: 'option7' },
+        { label: 'Option 8', value: 'option8' },
+        { label: 'Option 9', value: 'option9' },
+        { label: 'Option 10', value: 'option10' },
+        { label: 'Option 11', value: 'option11' },
+        { label: 'Option 12', value: 'option12' },
+      ]} value={select} onChange={setSelect} searchable />
+      <ThemedText>{select}</ThemedText>
     </ParallaxScrollView>
   );
 }

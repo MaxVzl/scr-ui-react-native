@@ -1,14 +1,24 @@
-import { StyleSheet, TextInput, TextInputProps, View, Dimensions } from "react-native";
+import { StyleSheet, TextInput, TextInputProps, View, Dimensions, ActivityIndicator } from "react-native";
 import { Color } from "../../types/Color";
 import { useContext, useState, useEffect } from "react";
 import { ScrUiContext } from "../../contexts/ScrUiContext";
 import { Button } from "./Button";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import Icon from "../Icon";
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 
-type SearchInputProps = TextInputProps & {}
+type SearchInputProps = TextInputProps & {
+  bottomSheet?: boolean
+  loading?: boolean
+}
 
-export const SearchInput = ({ value: externalValue, onChangeText: externalOnChangeText, ...props }: SearchInputProps) => {
+export const SearchInput = ({
+  value: externalValue,
+  onChangeText: externalOnChangeText,
+  bottomSheet,
+  loading,
+  ...props
+}: SearchInputProps) => {
   const { colors } = useContext(ScrUiContext);
   const [internalValue, setInternalValue] = useState(externalValue || '');
   
@@ -42,6 +52,8 @@ export const SearchInput = ({ value: externalValue, onChangeText: externalOnChan
   const handleClear = () => {
     handleChangeText('');
   };
+
+  const TextInputComponent = bottomSheet ? BottomSheetTextInput : TextInput;
   
   return (
     <View style={styles(colors).container}>
@@ -49,12 +61,15 @@ export const SearchInput = ({ value: externalValue, onChangeText: externalOnChan
         <View style={styles(colors).icon}>
           <Icon name="Search" size={16} color={colors.primary} />
         </View>
-        <TextInput
+        <TextInputComponent
           style={styles(colors).input}
           value={displayValue}
           onChangeText={handleChangeText}
           {...props}
         />
+        {loading && <View style={styles(colors).loading}>
+          <ActivityIndicator size="small" color={colors.primary} />
+        </View>}
       </Animated.View>
       <Animated.View style={[styles(colors).buttonContainer, buttonAnimatedStyle]}>
         <Button title="Annuler" variant="secondary" size="small" onPress={handleClear} />
@@ -74,12 +89,18 @@ const styles = (colors: Color) => StyleSheet.create({
     top: '50%',
     transform: [{ translateY: '-50%' }],
   },
+  loading: {
+    position: 'absolute',
+    right: 10,
+    top: '50%',
+    transform: [{ translateY: '-50%' }],
+  },
   input: {
     backgroundColor: `${colors.primary}1A`,
     color: colors.primary,
     borderRadius: 8,
     padding: 10,
-    paddingLeft: 40,
+    paddingHorizontal: 40,
     height: 36
   },
   buttonContainer: {

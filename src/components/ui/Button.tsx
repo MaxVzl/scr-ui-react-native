@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import { ScrUiContext } from '../../contexts/ScrUiContext';
 import { Color } from '../../types/Color';
 import { icons } from 'lucide-react-native';
 import Icon from '../Icon';
+import { ViewProps } from 'react-native-svg/lib/typescript/fabric/utils';
 
 type ButtonVariant = 'primary' | 'secondary' |'error';
 type ButtonSize = 'large' | 'medium' | 'small';
@@ -51,6 +52,17 @@ export const Button = ({
         </>
       )}
     </TouchableOpacity>
+  );
+};
+
+type ButtonSkeletonProps = ViewProps & {
+  size?: ButtonSize;
+};
+
+export const ButtonSkeleton = ({ size = 'medium', ...props }: ButtonSkeletonProps) => {
+  const { colors } = useContext(ScrUiContext);
+  return (
+    <View style={[styles(colors).button, styles(colors)[size], { backgroundColor: 'gray', opacity: 0.1 }]} {...props}/>
   );
 };
 
