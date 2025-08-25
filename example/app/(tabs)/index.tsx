@@ -128,7 +128,7 @@ export default function HomeScreen() {
 
       {/* <Avatar source={{ uri: 'https://xsgames.co/randomusers/avatar.php?g=male' }} /> */}
 
-      <Switch/>
+      <Switch value={loading} onValueChange={() => setLoading(!loading)} />
     </ParallaxScrollView>
   );
 }

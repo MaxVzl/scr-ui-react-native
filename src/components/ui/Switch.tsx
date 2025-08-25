@@ -1,68 +1,86 @@
-import { useState } from "react";
-import { Animated, Pressable, StyleSheet } from "react-native";
-import { interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { useContext, useState, useRef, useEffect } from "react";
+import { TouchableOpacity, Animated } from "react-native"
+import { ScrUiContext } from "../../contexts/ScrUiContext";
 
-const trackColors = { on: '#82cab2', off: '#fa7f7c' };
-const duration = 400;
+type SwitchProps = {
+  value?: boolean;
+  onValueChange?: (value: boolean) => void;
+}
 
-export const Switch = () => {
-  const [value, setValue] = useState(false);
-  const height = useSharedValue(0);
-  const width = useSharedValue(0);
+export const Switch = ({value, onValueChange}: SwitchProps) => {
+  const {colors} = useContext(ScrUiContext);
+  const [internalValue, setInternalValue] = useState(false);
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const colorAnim = useRef(new Animated.Value(0)).current;
+  
+  const currentValue = value !== undefined ? value : internalValue;
 
-  const trackAnimatedStyle = useAnimatedStyle(() => {
-    const color = interpolateColor(
-      value.value,
-      [0, 1],
-      [trackColors.off, trackColors.on]
-    );
-    const colorValue = withTiming(color, { duration });
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: currentValue ? 1 : 0,
+        duration: 200,
+        useNativeDriver: false,
+      }),
+      Animated.timing(colorAnim, {
+        toValue: currentValue ? 1 : 0,
+        duration: 200,
+        useNativeDriver: false,
+      })
+    ]).start();
+  }, [currentValue, slideAnim, colorAnim]);
 
-    return {
-      backgroundColor: colorValue,
-      borderRadius: height.value / 2,
-    };
+  const handleToggle = () => {
+    const newValue = !currentValue;
+    
+    if (value === undefined) {
+      setInternalValue(newValue);
+    }
+    
+    onValueChange?.(newValue);
+  };
+
+  const circleLeft = slideAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [4, 22],
   });
 
-  const thumbAnimatedStyle = useAnimatedStyle(() => {
-    const moveValue = interpolate(
-      Number(value.value),
-      [0, 1],
-      [0, width.value - height.value]
-    );
-    const translateValue = withTiming(moveValue, { duration });
+  const backgroundColor = colorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [colors.muted, `${colors.primary}1A`],
+  });
 
-    return {
-      transform: [{ translateX: translateValue }],
-      borderRadius: height.value / 2,
-    };
+  const circleColor = colorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [colors.mutedText, colors.primary],
   });
 
   return (
-    <Pressable onPress={() => setValue(!value)}>
-      <Animated.View
-        onLayout={(e) => {
-          height.value = e.nativeEvent.layout.height;
-          width.value = e.nativeEvent.layout.width;
-        }}
-        style={[switchStyles.track, trackAnimatedStyle]}>
-        <Animated.View
-          style={[switchStyles.thumb, thumbAnimatedStyle]}></Animated.View>
-      </Animated.View>
-    </Pressable>
+    <TouchableOpacity style={{
+      position: 'relative',
+      width: 51,
+      height: 31,
+      borderRadius: 15.5,
+    }} activeOpacity={0.8} onPress={handleToggle}>
+      <Animated.View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        borderRadius: 15.5,
+        backgroundColor: backgroundColor,
+      }} />
+      <Animated.View style={{
+        position: 'absolute',
+        top: '50%',
+        left: circleLeft,
+        transform: [{translateY: '-50%'}],
+        width: 25,
+        height: 25,
+        backgroundColor: circleColor,
+        borderRadius: 12.5,
+      }}></Animated.View>
+    </TouchableOpacity>
   )
 }
-
-const switchStyles = StyleSheet.create({
-  track: {
-    alignItems: 'flex-start',
-    width: 100,
-    height: 40,
-    padding: 5,
-  },
-  thumb: {
-    height: '100%',
-    aspectRatio: 1,
-    backgroundColor: 'white',
-  },
-});

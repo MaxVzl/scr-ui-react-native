@@ -10,3 +10,4 @@ export * from './TabBar';
 export * from './PasswordInput';
 export * from './Avatar';
 export * from './Tabs';
+export * from './Switch';
