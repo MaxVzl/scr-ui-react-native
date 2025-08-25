@@ -5,7 +5,7 @@ import { Color } from '../../types/Color';
 import Icon from '../Icon';
 import { icons } from 'lucide-react-native';
 
-type IconButtonVariant = 'primary' | 'secondary' |'error';
+type IconButtonVariant = 'primary' | 'secondary' |'error' | 'muted';
 type IconButtonSize = 'large' | 'medium' | 'small';
 
 type IconButtonProps = TouchableOpacityProps & {
@@ -80,6 +80,13 @@ const styles = (color: Color) => StyleSheet.create({
     color: color.error,
   },
 
+  muted: {
+    backgroundColor: color.muted,
+  },
+  mutedText: {
+    color: color.mutedText,
+  },
+
   large: {
     padding: 20,
     width: 60,
@@ -91,7 +98,7 @@ const styles = (color: Color) => StyleSheet.create({
     height: 48
   },
   small: {
-    padding: 10,
+    padding: 8,
     width: 36,
     height: 36
   },

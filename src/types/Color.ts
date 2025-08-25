@@ -5,4 +5,6 @@ export type Color = {
   primaryText: string;
   error: string;
   errorText: string;
+  muted: string;
+  mutedText: string;
 };

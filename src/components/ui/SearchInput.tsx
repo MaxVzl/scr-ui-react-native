@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, TextInputProps, View, Dimensions, ActivityIndicator } from "react-native";
+import { StyleSheet, TextInput, TextInputProps, View, Dimensions, ActivityIndicator, TouchableOpacity } from "react-native";
 import { Color } from "../../types/Color";
 import { useContext, useState, useEffect } from "react";
 import { ScrUiContext } from "../../contexts/ScrUiContext";
@@ -24,21 +24,22 @@ export const SearchInput = ({
   
   const displayValue = externalValue !== undefined ? externalValue : internalValue;
   
-  const translateXValue = useSharedValue(displayValue ? 0 : 100);
-  const inputWidthValue = useSharedValue(displayValue ? 0.78 : 1);
+  const clearIconOpacity = useSharedValue(0);
+  const clearIconTranslateX = useSharedValue(20);
   
   useEffect(() => {
-    translateXValue.value = withTiming(displayValue ? 0 : 100, { duration: 300 });
-    inputWidthValue.value = withTiming(displayValue ? 0.78 : 1, { duration: 300 });
-  }, [displayValue, translateXValue, inputWidthValue]);
+    if (displayValue) {
+      clearIconOpacity.value = withTiming(1, { duration: 300 });
+      clearIconTranslateX.value = withTiming(0, { duration: 300 });
+    } else {
+      clearIconOpacity.value = withTiming(0, { duration: 300 });
+      clearIconTranslateX.value = withTiming(20, { duration: 300 });
+    }
+  }, [displayValue, clearIconOpacity, clearIconTranslateX]);
   
-  const buttonAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateXValue.value }],
-  }));
-  
-  const inputAnimatedStyle = useAnimatedStyle(() => ({
-    width: `${inputWidthValue.value * 100}%`,
-    position: 'relative'
+  const clearIconAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: clearIconOpacity.value,
+    transform: [{ translateX: clearIconTranslateX.value }, { translateY: '-50%' }]
   }));
   
   const handleChangeText = (text: string) => {
@@ -56,55 +57,49 @@ export const SearchInput = ({
   const TextInputComponent = bottomSheet ? BottomSheetTextInput : TextInput;
   
   return (
-    <View style={styles(colors).container}>
-      <Animated.View style={inputAnimatedStyle}>
-        <View style={styles(colors).icon}>
-          <Icon name="Search" size={16} color={colors.primary} />
-        </View>
-        <TextInputComponent
-          style={styles(colors).input}
-          value={displayValue}
-          onChangeText={handleChangeText}
-          {...props}
-        />
-        {loading && <View style={styles(colors).loading}>
-          <ActivityIndicator size="small" color={colors.primary} />
-        </View>}
-      </Animated.View>
-      <Animated.View style={[styles(colors).buttonContainer, buttonAnimatedStyle]}>
-        <Button title="Annuler" variant="secondary" size="small" onPress={handleClear} />
+    <View>
+      <View style={styles(colors).icon}>
+        {loading ? <ActivityIndicator size={16} color={colors.mutedText} /> : <Icon name="Search" size={16} color={colors.mutedText} />}
+      </View>
+      <TextInputComponent
+        style={styles(colors).input}
+        value={displayValue}
+        onChangeText={handleChangeText}
+        {...props}
+      />
+      <Animated.View style={[styles(colors).clearIcon, clearIconAnimatedStyle]}>
+        <TouchableOpacity onPress={handleClear} activeOpacity={0.8}>
+          <Icon name="CircleX" size={16} color={colors.mutedText} />
+        </TouchableOpacity>
       </Animated.View>
     </View>
   )
 }
 
 const styles = (colors: Color) => StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   icon: {
     position: 'absolute',
     left: 10,
     top: '50%',
     transform: [{ translateY: '-50%' }],
+    zIndex: 1
   },
-  loading: {
+  clearIcon: {
     position: 'absolute',
     right: 10,
     top: '50%',
-    transform: [{ translateY: '-50%' }],
+    zIndex: 1
   },
   input: {
-    backgroundColor: `${colors.primary}1A`,
-    color: colors.primary,
+    backgroundColor: colors.muted,
+    color: colors.text,
     borderRadius: 8,
     padding: 10,
     paddingHorizontal: 40,
     height: 36
   },
   buttonContainer: {
-    position: 'absolute',
-    right: 0,
+    width: 72,
+    flexShrink: 0
   }
 })

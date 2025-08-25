@@ -5,7 +5,7 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Button, ButtonSkeleton, DateTimePicker, dropdownMenu, IconButton, Input, SearchInput, Select } from '@scr-ui/components';
+import { Avatar, Button, ButtonSkeleton, DateTimePicker, dropdownMenu, IconButton, Input, PasswordInput, SearchInput, Select, Switch, Tabs } from '@scr-ui/components';
 import { useState } from 'react';
 import { useScrUi } from '@scr-ui/hooks';
 
@@ -24,6 +24,12 @@ export default function HomeScreen() {
       label: todo.title
     }));
   }
+
+  // return (
+  //   <ThemedView style={{ flex: 1, padding: 40 }}>
+  //     <Tabs />
+  //   </ThemedView>
+  // );
 
   return (
     <ParallaxScrollView
@@ -77,16 +83,18 @@ export default function HomeScreen() {
       }} loading={loading} />
       <Button title="Click me" variant='secondary' size='small' icon='AArrowDown' loading={loading} />
       <Button title="Click me" variant='error' size='large' icon='AArrowDown' spaced loading={loading} />
-      <Button title="Click me" onPress={() => dropdownMenu.open([
-          { label: 'Option 1', action: () => console.log('Option 1 sélectionnée') },
-          { label: 'Option 2', action: () => console.log('Option 2 sélectionnée') },
-          { label: 'Supprimer', action: () => console.log('Suppression...'), isError: true }
+      <Button title="Click me" variant='muted' size='large' icon='AArrowDown' spaced loading={loading} /> */}
+      {/* <Button title="Click me" onPress={() => dropdownMenu.open([
+          { label: 'Option 1', action: () => console.log('Option 1 sélectionnée'), icon: 'ArrowRight' },
+          { label: 'Option 2', action: () => console.log('Option 2 sélectionnée'), spaced: true },
+          { label: 'Supprimer', action: () => console.log('Suppression...'), isError: true, icon: 'Trash2', spaced: true }
         ])} /> */}
       {/* @ts-ignore */}
       {/* <DateTimePicker value={date} onChange={(date) => setDate(date)} mode='date'/>
       <IconButton icon='AArrowDown' loading={loading} />
       <IconButton icon='AArrowDown' size='small' variant='secondary' loading={loading} />
       <IconButton icon='AArrowDown' size='large' variant='error' loading={loading} />
+      <IconButton icon='AArrowDown' size='large' variant='muted' loading={loading} />
       <Input placeholder='Entrez votre nom' value={name} onChangeText={setName} />
       <ThemedText>{name}</ThemedText> */}
       {/* <SearchInput placeholder='Rechercher...' value={name} onChangeText={(value) => {
@@ -97,7 +105,7 @@ export default function HomeScreen() {
         }, 500);
       }} loading={loading} />
       <ThemedText>{name}</ThemedText> */}
-      <Select placeholder='Sélectionner une option' items={[
+      {/* <Select placeholder='Sélectionner une option' items={[
         { label: 'Option 1', value: 'option1' },
         { label: 'Option 2', value: 'option2' },
         { label: 'Option 3', value: 'option3' },
@@ -111,7 +119,16 @@ export default function HomeScreen() {
         { label: 'Option 11', value: 'option11' },
         { label: 'Option 12', value: 'option12' },
       ]} value={select} onChange={setSelect} searchable />
-      <ThemedText>{select}</ThemedText>
+      <ThemedText>{select}</ThemedText> */}
+
+      {/* <Input placeholder='Entrez votre nom' value={name} onChangeText={setName} />
+      <Input placeholder='Entrez votre nom' value={name} onChangeText={setName} icon='User' />
+      <PasswordInput placeholder='Entrez votre mot de passe' />
+      <PasswordInput placeholder='Entrez votre mot de passe' icon='Lock' /> */}
+
+      {/* <Avatar source={{ uri: 'https://xsgames.co/randomusers/avatar.php?g=male' }} /> */}
+
+      <Switch/>
     </ParallaxScrollView>
   );
 }

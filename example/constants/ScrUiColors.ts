@@ -14,6 +14,8 @@ export const ScrUiColors = {
     primaryText: '#ffffff',
     error: '#ff0000',
     errorText: '#ffffff',
+    muted: '#f4f4f5',
+    mutedText: '#71717a',
   },
   dark: {
     text: '#ECEDEE',
@@ -22,5 +24,7 @@ export const ScrUiColors = {
     primaryText: '#000000',
     error: '#ff0000',
     errorText: '#ffffff',
+    muted: '#27272a',
+    mutedText: '#a1a1aa',
   },
 };

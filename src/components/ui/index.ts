@@ -6,3 +6,7 @@ export * from './DateTimePicker';
 export * from './Input';
 export * from './SearchInput';
 export * from './Select';
+export * from './TabBar';
+export * from './PasswordInput';
+export * from './Avatar';
+export * from './Tabs';

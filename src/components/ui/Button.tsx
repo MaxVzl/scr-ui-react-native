@@ -6,7 +6,7 @@ import { icons } from 'lucide-react-native';
 import Icon from '../Icon';
 import { ViewProps } from 'react-native-svg/lib/typescript/fabric/utils';
 
-type ButtonVariant = 'primary' | 'secondary' |'error';
+type ButtonVariant = 'primary' | 'secondary' |'error' | 'muted';
 type ButtonSize = 'large' | 'medium' | 'small';
 
 type ButtonProps = TouchableOpacityProps & {
@@ -99,6 +99,13 @@ const styles = (color: Color) => StyleSheet.create({
     color: color.error,
   },
 
+  muted: {
+    backgroundColor: color.muted,
+  },
+  mutedText: {
+    color: color.mutedText,
+  },
+
   large: {
     padding: 20,
     height: 60
@@ -108,7 +115,7 @@ const styles = (color: Color) => StyleSheet.create({
     height: 48
   },
   small: {
-    padding: 10,
+    padding: 8,
     height: 36
   },
 

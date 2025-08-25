@@ -85,7 +85,7 @@ const RenderSelect = ({
           <Button key={index} title={item.label} onPress={() => {
             bottomSheet.close();
             onChange && onChange(value === item.value ? undefined : item.value)
-          }} variant='secondary' size='large' spaced icon={value === item.value ? 'Check' : undefined} />
+          }} variant='muted' size='large' spaced icon={value === item.value ? 'Check' : undefined} />
         )) : (
           <Text>Aucun résultat</Text>
         )}
