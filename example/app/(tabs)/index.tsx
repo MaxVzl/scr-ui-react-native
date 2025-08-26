@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -25,9 +25,17 @@ export default function HomeScreen() {
     }));
   }
 
+  const FirstRoute = () => (
+    <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
+  );
+  
+  const SecondRoute = () => (
+    <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
+  );  
+
   // return (
   //   <ThemedView style={{ flex: 1, padding: 40 }}>
-  //     <Tabs />
+  //     <Tabs routes={[{ value: 'first', title: 'First', route: FirstRoute }, { value: 'second', title: 'Second', route: SecondRoute }]} />
   //   </ThemedView>
   // );
 
