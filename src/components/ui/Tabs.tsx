@@ -76,6 +76,7 @@ export const Tabs = ({
               {routes.map((route, i) => {
                 return (
                   <TouchableOpacity
+                    key={route.key}
                     style={[styles(colors).tabItem, {backgroundColor: route.key === routes[index].key ? colors.background : colors.muted}]}
                     onPress={() => props.jumpTo(route.key)} activeOpacity={0.8}>
                     <Animated.Text style={{ opacity, color: route.key === routes[index].key ? colors.text : colors.mutedText }}>{route.title}</Animated.Text>
