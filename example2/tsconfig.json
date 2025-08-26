@@ -1,4 +1,13 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@scr-ui/*": [
+        "../src/*"
+      ]
+    }
+  },
   "extends": "expo/tsconfig.base"
 }

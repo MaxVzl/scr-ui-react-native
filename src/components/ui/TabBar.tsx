@@ -48,6 +48,8 @@ export function TabBar({
         </Animated.View>
         {state.routes.map((route: any, index: number) => {
           const { options } = descriptors[route.key];
+          // const descriptor = descriptors?.[route.key] ?? {};
+          // const options = descriptor.options ?? {};
           const label =
             options.tabBarLabel !== undefined
               ? options.tabBarLabel
